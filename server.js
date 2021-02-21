@@ -26,3 +26,46 @@ app.get('/api/hello', function(req, res) {
 app.listen(port, function() {
   console.log(`Listening on port ${port}`);
 });
+
+//Create Schema
+let urlSchema = new mongoose.Schema({
+  original: {type: String, required: true},
+  short: Number
+})
+
+//Create model
+let Url = mongoose.model('Url', urlSchema)
+
+//Getting URL parameter
+let bodyParser = require('body-parser')
+let responseObject = {}
+app.post('/api/shorturl/new/', bodyParser.urlencoded({extended: false}), (request, response) => {
+  let inputUrl = request.body['url']
+  responseObject['original_url'] = inputUrl
+
+  let inputShort = 1
+
+  Url.findOne({})
+      .sort({short: 'desc'})
+      .exec( (error, result) => {
+        if (!error && result!= undefined){
+          inputShort = result.short + 1
+        }
+        if (!error){
+          Url.findOneAndUpdate(
+            {original: inputUrl},
+            {original: inputUrl, short: inputShort},
+            {new: true, upsert: true},
+            (error, savedUrl) => {
+              if(!error){
+                responseObject['short_url'] = savedUrl.short
+                response.json(responseObject)
+              }
+            }
+          )
+        }
+
+      }) 
+  
+})
+
