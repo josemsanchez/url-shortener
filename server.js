@@ -41,6 +41,13 @@ let bodyParser = require('body-parser')
 let responseObject = {}
 app.post('/api/shorturl/new/', bodyParser.urlencoded({extended: false}), (request, response) => {
   let inputUrl = request.body['url']
+
+  let UrlRegex = new RegExp(/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi)
+
+  if(!inputUrl.match(UrlRegex)){
+    response.json({error: 'Invalid URL'})
+    return
+  }
   responseObject['original_url'] = inputUrl
 
   let inputShort = 1
