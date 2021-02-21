@@ -73,6 +73,17 @@ app.post('/api/shorturl/new/', bodyParser.urlencoded({extended: false}), (reques
         }
 
       }) 
-  
+})
+
+app.get('/api/shorturl/:input', (request, response) => {
+  let input = request.params.input
+
+  Url.findOne({short: input}, (error, result) => {
+    if(!error && result!=undefined){
+      response.redirect(result.original)
+    }else{
+      response.json('URL not found')
+    }
+  })
 })
 
