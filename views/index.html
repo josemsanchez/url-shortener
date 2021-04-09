@@ -15,19 +15,29 @@
   <body>
     <h1>URL Shortener Microservice</h1>
     <main>
+      <div>
+        <h3>1. Post URL</h3>
+      </div>
       <section>
-        <form action="api/shorturl/new" method="POST">
+        <form target="_blank" action="api/shorturl/new" method="POST">
           <fieldset>
             <legend>URL Shortener</legend>
             <label for="url_input">URL:</label>
-            <input id="url_input" type="text" name="url" placeholder="https://www.freecodecamp.org/" />
+            <input id="url_input" type="text" name="url" placeholder="https://www.example.com/" />
             <input type="submit" value="POST URL" />
           </fieldset>
         </form>
+        <h3>2. Example Output:</h3>
+        <p>{"original_url":"https://github.com/","short_url":5}</p>
+        <h3>3. Example Usage:</h3>
+        <p><a href="https://cutturl.herokuapp.com/api/shorturl/5" target="_blank">
+          <b>https://cutturl.herokuapp.com/api/shorturl/5</b>
+        </a> ---> will redirect to: https://github.com/</p>
+
       </section>
     </main>
     <footer>
-      <p>By <a href="https://josemsanchez.github.io/">Jose Sanchez</a></p>
+      <p><i>By <a href="https://josemsanchez.github.io/">Jose Sanchez</a></i></p>
     </footer>
   </body>
 </html>
